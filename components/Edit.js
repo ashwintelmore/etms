@@ -5,11 +5,11 @@ import {
   StyleSheet,
   Button,
   TouchableOpacity,
+  ScrollView,
+  Alert,
 } from "react-native";
 import React, { useEffect } from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import SyncStorage from 'sync-storage';
-const Drawer = createDrawerNavigator();
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Navbar from "./Navbar";
 export default function Edit({ navigation }) {
@@ -27,96 +27,133 @@ export default function Edit({ navigation }) {
     endDate: "",
     route: "",
   });
-  const handleClick = () => {
-      SyncStorage.set('user', userData)
-      console.log('syncget', SyncStorage.get('user'))
+  const handleClick = async (userData) => {
+    try {
+      await AsyncStorage.setItem("user", JSON.stringify(userData));
+      // Alert('success')
+
+    } catch (error) {
+      // Error saving data
+      console.log("error", error);
+    }
+  };
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+        setUserData(JSON.parse(value));
+      }
+    } catch (error) {
+      console.log("error", error);
+      // Error retrieving data
+    }
+  };
+
+  const pushInRequests = async (userData) => {
+    try {
+      const requests = await AsyncStorage.getItem("requests");
+      let updatedRequests = [userData]
+      if(requests)
+      {
+        updatedRequests = [...JSON.parse(requests)]
+      }
+      await AsyncStorage.setItem("requests", JSON.stringify(updatedRequests));
+      Alert('success')
+    } catch (error) {
+      // Error saving data
+      console.log("error", error);
+    }
   };
 
   useEffect(() => {
-   console.log('syncget', SyncStorage.get('user'))
-  }, [])
+    getData();
+  }, []);
 
   return (
     <>
       <Navbar navigation={navigation} />
-      <View style={styles.container}>
-        <Text>Name</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.name}
-          onChangeText={(e) => setUserData({ ...userData, name: e })}
-        />
-        <Text>to</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.to}
-          onChangeText={(e) => setUserData({ ...userData, to: e })}
-        />
-        <Text>From</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.from}
-          onChangeText={(e) => setUserData({ ...userData, from: e })}
-        />
-        <Text>Office In</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.officeIn}
-          onChangeText={(e) => setUserData({ ...userData, officeIn: e })}
-        />
+      <ScrollView>
+        <View style={styles.container}>
+          <Text>Name</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.name}
+            onChangeText={(e) => setUserData({ ...userData, name: e })}
+          />
+          <Text>to</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.to}
+            onChangeText={(e) => setUserData({ ...userData, to: e })}
+          />
+          <Text>From</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.from}
+            onChangeText={(e) => setUserData({ ...userData, from: e })}
+          />
+          <Text>Office In</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.officeIn}
+            onChangeText={(e) => setUserData({ ...userData, officeIn: e })}
+          />
 
-        <Text>Office Out</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.officeOut}
-          onChangeText={(e) => setUserData({ ...userData, officeOut: e })}
-        />
+          <Text>Office Out</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.officeOut}
+            onChangeText={(e) => setUserData({ ...userData, officeOut: e })}
+          />
 
-        <Text>Emp Id</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.empId}
-          onChangeText={(e) => setUserData({ ...userData, empId: e })}
-        />
+          <Text>Emp Id</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.empId}
+            onChangeText={(e) => setUserData({ ...userData, empId: e })}
+          />
 
-        <Text>Bus stop</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.busstop}
-          onChangeText={(e) => setUserData({ ...userData, busstop: e })}
-        />
+          <Text>Bus stop</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.busstop}
+            onChangeText={(e) => setUserData({ ...userData, busstop: e })}
+          />
 
-        <Text>Route Type</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.RoutType}
-          onChangeText={(e) => setUserData({ ...userData, RoutType: e })}
-        />
+          <Text>Route Type</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.RoutType}
+            onChangeText={(e) => setUserData({ ...userData, RoutType: e })}
+          />
 
-        <Text>Start Date</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.startDate}
-          onChangeText={(e) => setUserData({ ...userData, startDate: e })}
-        />
+          <Text>Start Date</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.startDate}
+            onChangeText={(e) => setUserData({ ...userData, startDate: e })}
+          />
 
-        <Text>End Date</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.endDate}
-          onChangeText={(e) => setUserData({ ...userData, endDate: e })}
-        />
+          <Text>End Date</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.endDate}
+            onChangeText={(e) => setUserData({ ...userData, endDate: e })}
+          />
 
-        <Text>Route</Text>
-        <TextInput
-          style={styles.input}
-          value={userData.route}
-          onChangeText={(e) => setUserData({ ...userData, route: e })}
-        />
-        <TouchableOpacity style={styles.input} onPress={() => handleClick()}>
-          <Text>Submit</Text>
-        </TouchableOpacity>
-      </View>
+          <Text>Route</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.route}
+            onChangeText={(e) => setUserData({ ...userData, route: e })}
+          />
+          <TouchableOpacity style={styles.input} onPress={() => handleClick(userData)}>
+            <Text>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </>
   );
 }

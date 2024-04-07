@@ -11,24 +11,41 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-} from 'react-native';
-import React, { useEffect } from 'react';
-import SyncStorage from 'sync-storage';
-import { LinearGradient } from 'expo-linear-gradient';
-import Navbar from './Navbar';
-SyncStorage.set('test' , {name:'test this'})
-export default function Etms({navigation}) {
+} from "react-native";
+
+import React, { useEffect } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import Navbar from "./Navbar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+export default function Etms({ navigation }) {
   const [show, setShow] = React.useState(true);
   const [editshow, setEditShow] = React.useState(true);
-  const user = SyncStorage.get('user')
-  console.log('user', user)
+  const [user, setUser] = React.useState();
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+        setUser(JSON.parse(value));
+      }
+    } catch (error) {
+      console.log("error", error);
+      // Error retrieving data
+    }
+  };
 
-  useEffect(() => {
-    console.log('syncget home', SyncStorage.get('test').name)
-   }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      getData();
+      return () => {
+        // Do something that should run on blur
+      };
+    }, [])
+  );
   return (
     <>
-      
       <SafeAreaView style={styles.container}>
         <Modal transparent={true} visible={show} animationType="fade">
           <View style={styles.center}>
@@ -46,44 +63,49 @@ export default function Etms({navigation}) {
                 <Image
                   style={styles.modalimg}
                   source={{
-                    uri: 'https://www.dlf.pt/dfpng/middlepng/474-4748331_phone-in-hand-png-transparent-png.png',
+                    uri: "https://www.dlf.pt/dfpng/middlepng/474-4748331_phone-in-hand-png-transparent-png.png",
                   }}
                 />
               </View>
               <View style={styles.modalbtncon}>
                 <TouchableOpacity
                   style={styles.modalbtn}
-                  onPress={() => setShow(!show)}>
+                  onPress={() => setShow(!show)}
+                >
                   <Text style={styles.modalbtntxt}>OK</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </Modal>
-        <Navbar navigation={navigation}/>
+        <Navbar navigation={navigation} />
         <ScrollView showsHorizontalScrollIndicator={false}>
-       <LinearGradient
-       style={styles.mainbg}
-       start={[0, 1]}
+          <LinearGradient
+            style={styles.mainbg}
+            start={[0, 1]}
             end={[1, 0]}
-        colors={['#1da1f2', '#683cc7']}
-        >
-        
-        
-            <Text style={styles.txt}>Shiv Elite</Text>
-            <Image 
-                style={{
-                  marginVertical:10
-                }}
-                source={require('./../assets/bidirection.png')}
+            colors={["#1da1f2", "#683cc7"]}
+          >
+            <Text style={styles.txt}>{user?.from || "Shiv Elite"}</Text>
+            <Image
+              style={{
+                marginVertical: 10,
+              }}
+              source={require("./../assets/bidirection.png")}
             />
-            <Text style={styles.txt}>Mihan</Text>
+            <Text style={styles.txt}>{user?.to || "Mihan"}</Text>
 
-            <View style={styles.off}>
-              <Text style={styles.txt}>Office In - 09:00</Text>
-              <Text style={styles.txt3}>Office Out - 19:15</Text>
+            <View style={ user?.officeOut ? styles.off : styles.centerOff}>
+              <Text style={styles.txt}>
+                Office In - {user?.officeIn || "09:00"}
+              </Text>
+              {user?.officeOut && (
+                <Text style={styles.txt3}>
+                  Office Out - {user?.officeOut || "19:15"}{" "}
+                </Text>
+              )}
             </View>
-      </LinearGradient>
+          </LinearGradient>
 
           <View style={styles.mainbg2}>
             <View style={styles.space}>
@@ -93,8 +115,10 @@ export default function Etms({navigation}) {
               </View>
 
               <View style={styles.data}>
-                <Text style={styles.txt1}>{user?.name || 'ASHWIN TELMORE' }</Text>
-                <Text style={styles.txt1}>{user?.empId || '2590353'}</Text>
+                <Text style={styles.txt1}>
+                  {user?.name || "ASHWIN TELMORE"}
+                </Text>
+                <Text style={styles.txt1}>{user?.empId || "2590353"}</Text>
               </View>
             </View>
 
@@ -105,8 +129,8 @@ export default function Etms({navigation}) {
               </View>
 
               <View style={styles.data}>
-                <Text style={styles.txt1}>Shiv Elite</Text>
-                <Text style={styles.txt1}>Both</Text>
+                <Text style={styles.txt1}>{user?.busstop || "Shiv Elite"}</Text>
+                <Text style={styles.txt1}>{user?.RoutType || "Pick Up"}</Text>
               </View>
             </View>
 
@@ -117,51 +141,54 @@ export default function Etms({navigation}) {
               </View>
 
               <View style={styles.data}>
-                <Text style={styles.txt1}>2nd Apr, 2024</Text>
-                  <Text style={styles.txt1}>30th Apr, 2024</Text>
+                <Text style={styles.txt1}>
+                  {user?.startDate || "2nd Apr, 2024"}
+                </Text>
+                <Text style={styles.txt1}>
+                  {user?.endDate || "31st Apr, 2024"}
+                </Text>
               </View>
             </View>
 
             <View style={styles.txt6}>
               <Text style={styles.txt7}>
-                Route : Shive Elite To Mihan And Return Via-ShivBrighton
-                Route 9
+                Route : {user?.from || "Shiv Elite"} To {user?.to || "Mihan"}{" "}
+                And Return {user?.route || "Via-ShivBrighton Route 9"}
               </Text>
             </View>
           </View>
-          
         </ScrollView>
         <View style={styles.mainbg3}>
-            <Image
-              style={styles.bottomimg}
-              source={{
-                uri: 'https://static.brandirectory.com/logos/TCSA002_tcs_newlogo_final_rgb_jpg.jpg',
-              }}
-            />
-          </View>
+          <Image
+            style={styles.bottomimg}
+            source={{
+              uri: "https://static.brandirectory.com/logos/TCSA002_tcs_newlogo_final_rgb_jpg.jpg",
+            }}
+          />
+        </View>
       </SafeAreaView>
     </>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    height: '100%',
+    backgroundColor: "white",
+    height: "100%",
   },
   modalback: {
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
   modalbtncon: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingBottom: 30,
   },
   modalbtn: {
-    backgroundColor: '#0096FF',
+    backgroundColor: "#0096FF",
     paddingVertical: 5,
     paddingHorizontal: 50,
     borderRadius: 8,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
@@ -171,46 +198,46 @@ const styles = StyleSheet.create({
   modalimg: {
     aspectRatio: 1,
     marginVertical: 10,
-    backgroundColor: 'white',
-    height: '60%',
+    backgroundColor: "white",
+    height: "60%",
   },
   modalbtntxt: {
-    textAlign: 'center',
-    alignItems: 'center',
-    textAlignVertical: 'center',
-    color: 'white',
+    textAlign: "center",
+    alignItems: "center",
+    textAlignVertical: "center",
+    color: "white",
     width: 70,
     height: 36,
   },
   center: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   linearGradient: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 5,
     height: 200,
     width: 350,
   },
   modalcontainer: {
     borderRadius: 15,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
     height: 500,
-    width: '93%',
-    backgroundColor: 'white',
+    width: "93%",
+    backgroundColor: "white",
   },
   modalcontainer2: {
-    backgroundColor: 'green',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "green",
+    justifyContent: "center",
+    alignItems: "center",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     paddingVertical: 10,
@@ -219,22 +246,22 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   modaltxt: {
-    color: 'white',
-    backgroundColor: 'green',
-    fontWeight: '700',
+    color: "white",
+    backgroundColor: "green",
+    fontWeight: "700",
     fontSize: 20,
     marginVertical: 11,
   },
   modaltxt2: {
     marginHorizontal: 20,
-    fontWeight: '600',
+    fontWeight: "600",
     fontSize: 18,
   },
   modaltxt3: {
     marginHorizontal: 20,
 
-    color: '#0096FF',
-    fontStyle: 'italic',
+    color: "#0096FF",
+    fontStyle: "italic",
   },
   space: {
     marginTop: 15,
@@ -242,86 +269,92 @@ const styles = StyleSheet.create({
   txt6: {
     marginTop: 20,
     marginHorizontal: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     fontSize: 10,
   },
   txt7: {
     marginTop: 15,
     marginHorizontal: 8,
-    color: 'gray',
-    justifyContent: 'center',
+    color: "gray",
+    justifyContent: "center",
     fontSize: 14,
   },
   data: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 15,
     marginHorizontal: 20,
   },
   txt5: {
-    color: 'grey',
+    color: "grey",
   },
   off: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 10,
-    width: '100%',
-    justifyContent: 'space-between',
+    width: "100%",
+    justifyContent: "space-between",
+  },
+  centerOff: {
+    flexDirection: "row",
+    marginTop: 10,
+    width: "100%",
+    justifyContent: "center",
   },
   mainbg: {
     borderRadius: 10,
     margin: 20,
-    backgroundColor: '#0447c2',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#0447c2",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 15,
     // backgroundGradient: "vertical",
-    backgroundGradientTop: '#333333',
-    backgroundGradientBottom: '#666666',
+    backgroundGradientTop: "#333333",
+    backgroundGradientBottom: "#666666",
   },
   mainbg2: {
     borderRadius: 10,
     marginHorizontal: 25,
-    borderColor: 'black',
+    borderColor: "black",
 
     height: 330,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
     marginBottom: 30,
 
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
 
   txt: {
-    color: 'white',
-    fontWeight: '700',
+    color: "white",
+    fontWeight: "700",
     fontSize: 15,
   },
   txt3: {
-    color: 'white',
+    color: "white",
     paddingLeft: 40,
     fontSize: 15,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   txt1: {
-    fontWeight: '100',
+    fontWeight: "100",
   },
 
   mainbg3: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    left: '25%',
+    left: "25%",
     marginTop: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     height: 100,
   },
   bottomimg: {
     aspectRatio: 5,
-    height: '40%',
-    resizeMode: 'contain',
+    height: "40%",
+    resizeMode: "contain",
   },
 });

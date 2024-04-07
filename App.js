@@ -21,16 +21,36 @@ import Ionicons from 'react-native-vector-icons/FontAwesome';
 
 import SyncStorage from 'sync-storage';
 import Edit from './components/Edit';
+import BusRequest from './components/BusRequest';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 
 
 
 
 const CustomeDrawer = props=>{
+  const [userData, setUserData] = useState()
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("user");
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+        setUserData(JSON.parse(value));
+      }
+    } catch (error) {
+      console.log("error", error);
+      // Error retrieving data
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <>
     
-      <Text style={styles.drawerHeader}>Hi, Aman Rathod</Text>
+      <Text style={styles.drawerHeader}>Hi, {userData?.name || 'Ashwin Telmore'}</Text>
       <DrawerItemList {...props} />
     </>
   )
@@ -44,13 +64,16 @@ export default function App({navigation}) {
   return (
     <>
       <View style={styles.container}>
+      <StatusBar
+    backgroundColor="#0447c2"
+    barStyle="light-content"
+  />
         <NavigationContainer>
        
           <Drawer.Navigator
               drawerContent={props=>  <CustomeDrawer {...props} />}
               screenOptions={{
                 drawerStyle: {
-                 
                 },
               headerTintColor: { color: 'red' },
               headerStyle: {
@@ -61,7 +84,7 @@ export default function App({navigation}) {
               headerTitleStyle: {
                 color: 'red',
               },
-              drawerActiveBackgroundColor: 'lightgrey',
+              drawerActiveBackgroundColor: 'white',
               drawerActiveTintColor: 'black',
             }}
             initialRouteName="BackToHomePage"
@@ -76,7 +99,7 @@ export default function App({navigation}) {
             />
             <Stack.Screen
               name="ApplyBusPass"
-              component={ApplyBusPass}
+              component={Etms}
               options={{ headerShown: false, title: 'Apply Bus Pass',
               
 drawerIcon:()=>{ return <Ionicons name="bus" size={20} color="#888888" />}
@@ -86,7 +109,7 @@ drawerIcon:()=>{ return <Ionicons name="bus" size={20} color="#888888" />}
             />
             <Stack.Screen
               name="Buspass Request Status"
-              component={Etms}
+              component={BusRequest}
               options={{ headerShown: false,
               drawerIcon:()=>{ return <Ionicons name="pencil-square-o" size={20} color="#888888" />}
 
@@ -139,7 +162,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#683cc7',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   drawerHeader:{
     backgroundColor:'#683cc7',

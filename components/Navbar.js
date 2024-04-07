@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   txt: {
+    textAlign:'left',
     color: 'white',
   },
   
