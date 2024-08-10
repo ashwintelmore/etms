@@ -26,6 +26,21 @@ export default function Edit({ navigation }) {
     startDate: "",
     endDate: "",
     route: "",
+    startdateinnum:"",
+    enddateinnum:""
+  });
+  const [passData, setPassData] = React.useState({
+    id: "",
+    to: "Mihan",
+    from: "",
+    pickup: "",
+    drop: "",
+    status: "",
+    busstop: "",
+    
+    startDate: "",
+    endDate: "",
+    
   });
   const handleClick = async (userData) => {
     try {
@@ -35,6 +50,29 @@ export default function Edit({ navigation }) {
     } catch (error) {
       // Error saving data
       console.log("error", error);
+    }
+  };
+  const handlePass = async (passData) => {
+    try {
+      await AsyncStorage.setItem("passData", JSON.stringify(passData));
+      // Alert('success')
+
+    } catch (error) {
+      // Error saving data
+      console.log("error", error);
+    }
+  };
+  const getPass = async () => {
+    try {
+      const value = await AsyncStorage.getItem("passData");
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+        setPassData(JSON.parse(value));
+      }
+    } catch (error) {
+      console.log("error", error);
+      // Error retrieving data
     }
   };
   const getData = async () => {
@@ -149,10 +187,95 @@ export default function Edit({ navigation }) {
             value={userData.route}
             onChangeText={(e) => setUserData({ ...userData, route: e })}
           />
+          <Text>start Date in num </Text>
+          <TextInput
+            style={styles.input}
+            value={userData.startdateinnum}
+            placeholder="2024-08-21"
+            onChangeText={(e) => setUserData({ ...userData, startdateinnum: e })}
+          />
+          <Text>End Date in num</Text>
+          <TextInput
+            style={styles.input}
+            value={userData.enddateinnum}
+            placeholder="2024-08-21"
+            onChangeText={(e) => setUserData({ ...userData, enddateinnum: e })}
+          />
           <TouchableOpacity style={styles.input} onPress={() => handleClick(userData)}>
             <Text>Submit</Text>
           </TouchableOpacity>
         </View>
+
+        {/* ........................ */}
+        {/* <Text>bus passData</Text> */}
+        {/* <View style={styles.container}>
+          <Text>id</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.id}
+            onChangeText={(e) => setUserData({ ...passData, id: e })}
+          />
+          <Text>to</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.to}
+            onChangeText={(e) => setUserData({ ...passData, to: e })}
+          />
+          <Text>From</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.from}
+            onChangeText={(e) => setUserData({ ...passData, from: e })}
+          />
+          <Text>pickup</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.pickup}
+            onChangeText={(e) => setUserData({ ...passData, pickup: e })}
+          />
+
+          <Text>drop</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.drop}
+            onChangeText={(e) => setUserData({ ...passData, drop: e })}
+          />
+
+          
+
+          <Text>Bus stop</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.busstop}
+            onChangeText={(e) => setUserData({ ...passData, busstop: e })}
+          />
+
+          <Text>status</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.status}
+            onChangeText={(e) => setUserData({ ...passData, status: e })}
+          />
+
+          <Text>Start Date</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.startDate}
+            onChangeText={(e) => setUserData({ ...passData, startDate: e })}
+          />
+
+          <Text>End Date</Text>
+          <TextInput
+            style={styles.input}
+            value={passData.endDate}
+            onChangeText={(e) => setUserData({ ...passData, endDate: e })}
+          />
+
+          
+          <TouchableOpacity style={styles.input} onPress={() => handlePass(passData)}>
+            <Text>Submit</Text>
+          </TouchableOpacity>
+        </View> */}
       </ScrollView>
     </>
   );

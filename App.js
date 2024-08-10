@@ -65,7 +65,7 @@ export default function App({navigation}) {
     <>
       <View style={styles.container}>
       <StatusBar
-    backgroundColor="#0447c2"
+    backgroundColor="#683cc7"
     barStyle="light-content"
   />
         <NavigationContainer>

@@ -47,7 +47,7 @@ export default function Etms({ navigation }) {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Modal transparent={true} visible={show} animationType="fade">
+        <Modal transparent={true} visible={false} animationType="fade">
           <View style={styles.center}>
             <View style={styles.modalcontainer}>
               <View style={styles.modalcontainer2}>
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   modalbtncon: {
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 30,
+    paddingBottom: 0,
   },
   modalbtn: {
     backgroundColor: "#0096FF",
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
-    marginBottom: 30,
+    position:'absolute',
   },
   modalimg: {
     aspectRatio: 1,
@@ -276,9 +276,10 @@ const styles = StyleSheet.create({
   txt7: {
     marginTop: 15,
     marginHorizontal: 8,
-    color: "gray",
+    color: "#606060",
     justifyContent: "center",
-    fontSize: 14,
+    fontSize: 14.5,
+    textAlign:'center'
   },
   data: {
     flexDirection: "row",
@@ -288,6 +289,7 @@ const styles = StyleSheet.create({
   },
   txt5: {
     color: "grey",
+    
   },
   off: {
     flexDirection: "row",
@@ -317,13 +319,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     borderColor: "black",
 
-    height: 330,
+    height: 'auto',
     shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
     marginBottom: 30,
+    paddingBottom:30,
 
     backgroundColor: "white",
   },

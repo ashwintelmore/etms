@@ -8,26 +8,34 @@ import {
 } from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
-
+import { useRoute } from "@react-navigation/native";
 
 export default function Navbar({navigation}) {
   const [show, setShow] = React.useState(true);
+  const route = useRoute();
   return (
     <>
       <View style={styles.navbg}>
+        <View style={styles.flex}>
+         
         <TouchableOpacity onPress={()=>navigation.openDrawer()}>
-          <Image
+        <Ionicons style={styles.navbaricon} name="bars" size={22} color="white" />
+          </TouchableOpacity>
+          {
+            route.name==='Buspass Request Status'?<Text style={styles.txt}>Buspass Request Status</Text>:<Text style={styles.txt}>Digital Bus Pass</Text>
+          }
           
-            style={styles.navimg}
-            source={{
-              uri: 'https://i.pinimg.com/originals/26/9d/d1/269dd16fa1f5ff51accd09e7e1602267.png',
-            }}
-          />
-          </TouchableOpacity>
-          <Text style={styles.txt}>Digital Bus Pass</Text>
+
+        </View>
+        {
+          route.name==='Home'?
           <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
-          <Ionicons style={styles.navimg} name="bell-o" size={20} color="white" />
-          </TouchableOpacity>
+          <Image 
+          style={styles.img} 
+          source={require("../assets/bell6.png")}/>
+          </TouchableOpacity>:null
+        }
+         
         </View>
     </>
   );
@@ -44,11 +52,21 @@ const styles = StyleSheet.create({
   txt: {
     textAlign:'left',
     color: 'white',
+    fontSize:17,
+  },
+  flex:{
+    flexDirection:'row',
+    gap:30,
+  },
+  img:{
+    aspectRatio:1,
+    width:20,
+    height:26,
+    
   },
   
-  navimg: {
-    aspectRatio: 1,
-    height: 25,
+  navbaricon: {
+   marginLeft:5,
     
      
   },
