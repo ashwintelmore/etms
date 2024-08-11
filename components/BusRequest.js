@@ -131,6 +131,80 @@ import {
             </View>
           </View>
         </View>
+        <View style={styles.maincon}>
+          <View style={styles.con}>
+            <View style={styles.reqcon}>
+              <Text style={styles.txt}>Request Id: {Math.floor((Math.random()*10000000)+1)}</Text>
+              <Text style={styles.txtyellow} >Edited       </Text>
+            </View>
+            <View style={styles.flex1}>
+              <View style={styles.dotcon}>
+                <Text style={styles.green}>.</Text>
+                <Text style={styles.gray}>.</Text>
+                <Text style={styles.gray}>.</Text>
+                <Text style={styles.gray}>.</Text>
+                <Text style={styles.red}>.</Text>
+              </View>
+              <View style={styles.pathcon}>
+                <Text style={styles.pathtxt1}>{user?.from ||'Ord. Factory Gate-2'}</Text>
+                <Text style={styles.pathtxt2}>{user?.to||'Mihan'}</Text>
+              </View>
+            </View>
+  
+            <Text style={styles.stoptxt}>Bus Stop Name: {user?.busstop||'Subhash Chowk'}</Text>
+            <View style={styles.flex}>
+              {user?.officeIn?
+              <Text style={styles.graytxt}>Pick up : {user?.officeIn||' 09:00'}</Text>:null
+              }
+              {
+                user?.officeOut?<Text style={styles.graytxt}>Drop : {user?.officeOut||' 19:15'}</Text>:null
+              }
+              
+              
+            </View>
+            <View style={styles.flex}>
+              <Text style={styles.graytxt}>Start Date : {user?.startdateinnum||'2024-04-1'}</Text>
+              <Text style={styles.graytxt}>End Date : {user?.enddateinnum||'2024-04-30'}</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.maincon}>
+          <View style={styles.con}>
+            <View style={styles.reqcon}>
+              <Text style={styles.txt}>Request Id: {Math.floor((Math.random()*10000000)+1)}</Text>
+              <Text style={{ color:"red",
+      fontWeight:'700',}} >Cancelled      </Text>
+            </View>
+            <View style={styles.flex1}>
+              <View style={styles.dotcon}>
+                <Text style={styles.green}>.</Text>
+                <Text style={styles.gray}>.</Text>
+                <Text style={styles.gray}>.</Text>
+                <Text style={styles.gray}>.</Text>
+                <Text style={styles.red}>.</Text>
+              </View>
+              <View style={styles.pathcon}>
+                <Text style={styles.pathtxt1}>{user?.from ||'Ord. Factory Gate-2'}</Text>
+                <Text style={styles.pathtxt2}>{user?.to||'Mihan'}</Text>
+              </View>
+            </View>
+  
+            <Text style={styles.stoptxt}>Bus Stop Name: {user?.busstop||'Subhash Chowk'}</Text>
+            <View style={styles.flex}>
+            {user?.officeIn?
+              <Text style={styles.graytxt}>Pick up : {user?.officeIn||' 09:00'}</Text>:null
+              }
+              {
+                user?.officeOut?<Text style={styles.graytxt}>Drop : {user?.officeOut||' 19:15'}</Text>:null
+              }
+            </View>
+            <View style={styles.flex}>
+            <Text style={styles.graytxt}>Start Date : {user?.startdateinnum||'2024-04-1'}</Text>
+            <Text style={styles.graytxt}>End Date : {user?.enddateinnum||'2024-04-30'}</Text>
+            </View>
+          </View>
+        </View>
+       
 
         <View style={styles.maincon}>
           <View style={styles.con}>
@@ -358,7 +432,7 @@ import {
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingVertical:7,
-      paddingHorizontal:15,
+      paddingHorizontal:10,
       
       
       borderColor:"lightgray",
