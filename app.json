@@ -1,10 +1,38 @@
 {
   "expo": {
+    "name": "eTMS",
+    "slug": "etms",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/etms.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/fulletms.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "owner": "amanrathod",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/etms.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.amanrathod.snack8d0487d56fe84e22ad2e0a23ee8af3a3"
+    },
+    "web": {
+      "favicon": "./assets/etms.png"
+    },
     "extra": {
       "eas": {
         "projectId": "8d0487d5-6fe8-4e22-ad2e-0a23ee8af3a3"
       }
-    },
-    "owner": "amanrathod"
+    }
   }
 }
+
