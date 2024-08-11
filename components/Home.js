@@ -12,15 +12,22 @@ import {
   ActivityIndicator,
   Linking,
   Button,
+  StatusBar,
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
+import { useRoute } from "@react-navigation/native";
+import IconF from 'react-native-vector-icons/Fontisto';
+import IconI from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/FontAwesome6';
 export default function Home({ navigation }) {
   const [show, setShow] = React.useState(false);
+  const route = useRoute();
   return (
     <SafeAreaView  style={styles.container}>
+      
+     
     <LinearGradient
        style={styles.container}
        
@@ -35,21 +42,21 @@ export default function Home({ navigation }) {
       <View style={styles.con2}>
         <Pressable onPress={() => navigation.navigate('Home')}>
           <View style={styles.option}>
-            <Ionicons style={styles.img} name="bus" size={60} color="white" />
+            <IconI style={styles.img} name="bus" size={60} color="white" />
 
             <Text style={styles.txt4}>Bus Services</Text>
           </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Home')}>
         <View style={styles.option}>
-           <Ionicons style={styles.img} name="car" size={60} color="white" />
+           <IconF style={styles.img} name="car" size={60} color="white" />
 
           <Text style={styles.txt4}>Cab Services</Text>
         </View>
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Home')}>
         <View style={styles.option}>
-           <Ionicons style={styles.img} name="map-marker" size={60} color="white" />
+           <IconI style={styles.img} name="location-sharp" size={60} color="white" />
           <Text style={styles.txt4}>Geocode Yourself</Text>
         </View>
         </Pressable>
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
   txt2: {
     color: 'white',
     fontSize: 30,
-    fontWeight:'700',
+    fontWeight:'500',
   },
   txt3: {
     color: 'white',

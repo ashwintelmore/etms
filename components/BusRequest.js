@@ -13,7 +13,7 @@ import {
     Modal,
   } from 'react-native';
   import React from 'react';
-  import Ionicons from 'react-native-vector-icons/FontAwesome';
+  import Ionicons from 'react-native-vector-icons/Octicons';
   import { createDrawerNavigator } from '@react-navigation/drawer';
   import { NavigationContainer } from '@react-navigation/native';
   import { useFocusEffect } from "@react-navigation/native";
@@ -21,7 +21,7 @@ import {
   import AsyncStorage from "@react-native-async-storage/async-storage";
   import Navbar from './Navbar';
   export default function BusRequest({ navigation }) {
-    const [show, setShow] = React.useState(true);
+    const [show, setShow] = React.useState(false);
     const [user, setUser] = React.useState();
   const getData = async () => {
     try {
@@ -48,12 +48,57 @@ import {
     return (
       <>
         <Navbar navigation={navigation} />
+        <Modal transparent={true} visible={show} animationType="fade">
+          <View style={styles.center}>
+            <View style={styles.passalreadycon}>
+              <View style={styles.passalreadyinnercon}>
+                <Image style={styles.passalreadyimg} source={require("../assets/building.png")}/>
+              </View>
+              <Text style={styles.passalreadytxt} >You have 0 attempts to edit shift time.</Text>
+              <Text style={styles.passalreadytxt2} >Do you want to proceed?</Text>
+              <View style={styles.flex3}>
+              <TouchableOpacity onPress={()=>setShow(false)} style={styles.btn}><Text style={styles.oktxt} >NO</Text></TouchableOpacity>
+              <TouchableOpacity onPress={()=>setShow(false)} style={styles.btn}><Text style={styles.oktxt} >YES</Text></TouchableOpacity>
+              </View>
+              
+            </View>
+            {/* <View style={styles.modalcontainer}>
+
+              
+              <View style={styles.modalcontainer2}>
+                <Text style={styles.modaltxt}>New Feature!</Text>
+              </View>
+              <View style={styles.modalcontainer3}>
+                <Text style={styles.modaltxt2}>
+                  Renew your Bus Pass in a single click
+                </Text>
+                <Text style={styles.modaltxt3}>
+                  Effective from 1st Jan 2024, 6:45 am onwards
+                </Text>
+                <Image
+                  style={styles.modalimg}
+                  source={{
+                    uri: "https://www.dlf.pt/dfpng/middlepng/474-4748331_phone-in-hand-png-transparent-png.png",
+                  }}
+                />
+              </View>
+              <View style={styles.modalbtncon}>
+                <TouchableOpacity
+                  style={styles.modalbtn}
+                  onPress={() => setShow(!show)}
+                >
+                  <Text style={styles.modalbtntxt}>OK</Text>
+                </TouchableOpacity>
+              </View>
+            </View> */}
+          </View>
+        </Modal>
         <ScrollView>
         <View style={styles.maincon}>
           <View style={styles.con}>
             <View style={styles.reqcon}>
               <Text style={styles.txt}>Request Id: {Math.floor((Math.random()*10000000)+1)}</Text>
-              <Text style={styles.txtgreen} >Confirmed       <Ionicons style={styles.icon} name="pencil"  size={20} color="blue"  /></Text>
+              <Text style={styles.txtgreen} >Confirmed       <Ionicons style={styles.icon} name="pencil"  size={20} color="blue"  onPress={()=>setShow(true)}/></Text>
             </View>
             <View style={styles.flex1}>
               <View style={styles.dotcon}>
@@ -216,6 +261,83 @@ import {
       color:"#FFB61E",
       fontWeight:'700',
       
+    },
+    flex3:{
+      flexDirection:'row',
+      width:'100%',
+      justifyContent:'space-between',
+      alignItems:'center'
+    },
+    btn:{
+      paddingVertical:8,
+      backgroundColor:'lightgray',
+      width:'46%',
+      justifyContent:'center',
+      alignItems:'center',
+      marginHorizontal:5,
+      marginVertical:5,
+      borderRadius:3,
+      shadowColor: "#000",
+      shadowOffset: { width: 1, height: 1 },
+      shadowOpacity: 0.3,
+      shadowRadius: 5,
+      elevation: 2,
+    },
+    passalreadyinnercon:{
+      backgroundColor:'#7CBB11',
+      width:'100%',
+      justifyContent:'center',
+      alignItems:"center",
+      borderTopLeftRadius:3,
+      borderTopRightRadius:3,
+    },
+    passalreadyimg:{
+      aspectRatio:4,
+      marginTop:5,
+      marginBottom:5,
+      width:20,
+      height:30,
+      
+    },
+    passalreadytxt:{
+      marginTop:30,
+      marginBottom:0,
+      color:'black',
+      fontSize:15,
+    },
+    passalreadytxt2:{
+      marginTop:0,
+      marginBottom:10,
+      color:'black',
+      fontSize:15,
+    },
+    center: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    oktxt:{
+      color:'black',
+      marginBottom:0,
+      fontSize:15,
+      textAlign:'center'
+
+    },
+    passalreadycon:{
+    
+      borderRadius: 3,
+      shadowColor: "#000",
+      shadowOffset: { width: 1, height: 1 },
+      shadowOpacity: 0.3,
+      shadowRadius: 5,
+      elevation: 5,
+      height: 'auto',
+      width: "87%",
+      backgroundColor: "white",
+      justifyContent:'center',
+      alignItems:'center'
     },
     con: {
       borderRadius: 4,

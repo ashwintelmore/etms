@@ -5,6 +5,7 @@ import {
   Platform,
   StatusBar,
   StyleSheet,
+  
 } from 'react-native';
 import { createDrawerNavigator , DrawerContentScrollView , DrawerItemList } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -15,20 +16,23 @@ const Stack = createNativeStackNavigator();
 import Home from './components/Home';
 import Etms from './components/Etms';
 import Notification from './components/Notification';
-import ApplyBusPass from './components/ApplyBusPass';
+import Setting from './components/Setting';
 import Navbar from './components/Navbar';
+import IconF from 'react-native-vector-icons/Foundation';
+import Iconi from 'react-native-vector-icons/Ionicons';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SyncStorage from 'sync-storage';
 import Edit from './components/Edit';
 import BusRequest from './components/BusRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 
 
 const CustomeDrawer = props=>{
+  
   const [userData, setUserData] = useState()
   const getData = async () => {
     try {
@@ -50,7 +54,7 @@ const CustomeDrawer = props=>{
   return (
     <>
     
-      <Text style={styles.drawerHeader}>Hi, {userData?.name || 'Ashwin Telmore'}</Text>
+      <Text style={styles.drawerHeader}>Hi, {userData?.name.toUpperCase() || 'Ashwin Telmore'}</Text>
       <DrawerItemList {...props} />
     </>
   )
@@ -61,11 +65,14 @@ const CustomeDrawer = props=>{
 
 
 export default function App({navigation}) {
+  
+  const [settingbar,setSettingbar] = React.useState('')
+  
   return (
     <>
       <View style={styles.container}>
       <StatusBar
-    backgroundColor="#683cc7"
+    backgroundColor="#440095"
     barStyle="light-content"
   />
         <NavigationContainer>
@@ -94,7 +101,7 @@ export default function App({navigation}) {
               name="Home"
               component={Etms}
               options={{ headerShown: false,
-                drawerIcon:()=>{ return <Ionicons name="home" size={20} color="#888888" />}
+                drawerIcon:()=>{ return <Icon name="home" size={25} color="#727272" style={{width:30,textAlign:'center'}}/>}
                }}
             />
             <Stack.Screen
@@ -102,7 +109,7 @@ export default function App({navigation}) {
               component={Etms}
               options={{ headerShown: false, title: 'Apply Bus Pass',
               
-drawerIcon:()=>{ return <Ionicons name="bus" size={20} color="#888888" />}
+drawerIcon:()=>{ return <Iconi name="bus" size={24} color="#727272"  style={{width:30,textAlign:'center'}} />}
 
 
                }}
@@ -111,7 +118,7 @@ drawerIcon:()=>{ return <Ionicons name="bus" size={20} color="#888888" />}
               name="Buspass Request Status"
               component={BusRequest}
               options={{ headerShown: false,
-              drawerIcon:()=>{ return <Ionicons name="pencil-square-o" size={20} color="#888888" />}
+              drawerIcon:()=>{ return <IconF name="clipboard-pencil" size={25} color="#727272"  style={{width:30,textAlign:'center'}}/>}
 
                }}
               
@@ -121,15 +128,15 @@ drawerIcon:()=>{ return <Ionicons name="bus" size={20} color="#888888" />}
               component={Home}
               options={{ headerShown: false, title: 'Back To Home Page',
               
-              drawerIcon:()=>{ return <Ionicons name="clock-o" size={20} color="#888888" />}
+              drawerIcon:()=>{ return <Icon name="history" size={25} color="#727272"  style={{width:30,textAlign:'center'}}/>}
 
                }}
             />
             <Stack.Screen
               name="Settings"
-              component={Etms}
+              component={Setting}
               options={{ headerShown: false ,
-              drawerIcon:()=>{ return <Ionicons name="cog" size={20} color="#888888" />}
+              drawerIcon:()=>{ return <Iconi name="settings-sharp" size={21} color="#727272"  style={{width:30,textAlign:'center'}}/>}
 
               }}
             />
@@ -137,7 +144,7 @@ drawerIcon:()=>{ return <Ionicons name="bus" size={20} color="#888888" />}
               name="Logout"
               component={Etms}
               options={{ headerShown: false ,
-              drawerIcon:()=>{ return <Ionicons name="arrow-right" size={20} color="#888888" />}
+              drawerIcon:()=>{ return <Icon name="arrow-right" size={25} color="#727272"  style={{width:30,textAlign:'center'}}/>}
 
                }}
             />
@@ -165,10 +172,10 @@ const styles = StyleSheet.create({
     // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   drawerHeader:{
-    backgroundColor:'#683cc7',
+    backgroundColor:'#350075',
     fontSize:15,
     padding:15,
-    paddingTop:30,
+    paddingTop:40,
     color:'white'
   }
 });

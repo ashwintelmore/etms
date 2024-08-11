@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRoute } from "@react-navigation/native";
 
 export default function Navbar({navigation}) {
@@ -19,16 +19,16 @@ export default function Navbar({navigation}) {
         <View style={styles.flex}>
          
         <TouchableOpacity onPress={()=>navigation.openDrawer()}>
-        <Ionicons style={styles.navbaricon} name="bars" size={22} color="white" />
+        <Ionicons style={styles.navbaricon} name="menu" size={24} color="white" />
           </TouchableOpacity>
           {
-            route.name==='Buspass Request Status'?<Text style={styles.txt}>Buspass Request Status</Text>:<Text style={styles.txt}>Digital Bus Pass</Text>
+            route.name==='Buspass Request Status' ?<Text style={styles.txt}>Buspass Request Status</Text>:<Text style={styles.txt}>Digital Bus Pass</Text>
           }
           
 
         </View>
         {
-          route.name==='Home'?
+          route.name==='Home'|| route.name==='ApplyBusPass'?
           <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
           <Image 
           style={styles.img} 
@@ -43,7 +43,7 @@ export default function Navbar({navigation}) {
 const styles = StyleSheet.create({
   
   navbg: {
-    backgroundColor: '#683cc7',
+    backgroundColor: '#440095',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

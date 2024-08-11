@@ -136,6 +136,7 @@ export default function Edit({ navigation }) {
           <TextInput
             style={styles.input}
             value={userData.officeIn}
+             placeholder="09:00"
             onChangeText={(e) => setUserData({ ...userData, officeIn: e })}
           />
 
@@ -143,6 +144,7 @@ export default function Edit({ navigation }) {
           <TextInput
             style={styles.input}
             value={userData.officeOut}
+            placeholder="19:15"
             onChangeText={(e) => setUserData({ ...userData, officeOut: e })}
           />
 
@@ -164,6 +166,7 @@ export default function Edit({ navigation }) {
           <TextInput
             style={styles.input}
             value={userData.RoutType}
+            placeholder="Both--Pick up--Drop"
             onChangeText={(e) => setUserData({ ...userData, RoutType: e })}
           />
 
@@ -171,6 +174,7 @@ export default function Edit({ navigation }) {
           <TextInput
             style={styles.input}
             value={userData.startDate}
+            placeholder="1st Aug, 2024"
             onChangeText={(e) => setUserData({ ...userData, startDate: e })}
           />
 
@@ -178,6 +182,7 @@ export default function Edit({ navigation }) {
           <TextInput
             style={styles.input}
             value={userData.endDate}
+            placeholder="31st Aug, 2024"
             onChangeText={(e) => setUserData({ ...userData, endDate: e })}
           />
 

@@ -39,7 +39,7 @@ export default function Notification() {
           source={require("../assets/bell6.png")}/>
           </TouchableOpacity> */}
         </View>
-      <Text style={styles.txt2}>No notification for you!</Text>
+      <Text style={styles.txt2}>No notifications for you!</Text>
     </>
   );
 }
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     fontWeight:'800'
   },
   navbg: {
-    backgroundColor: '#683cc7',
+    backgroundColor: '#440095',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

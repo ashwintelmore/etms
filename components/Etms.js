@@ -12,16 +12,18 @@ import {
   TouchableOpacity,
   Modal,
 } from "react-native";
-
+import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Navbar from "./Navbar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 export default function Etms({ navigation }) {
-  const [show, setShow] = React.useState(true);
-  const [editshow, setEditShow] = React.useState(true);
+  const [show, setShow] = React.useState(false);
+  const [editshow, setEditShow] = React.useState('');
   const [user, setUser] = React.useState();
+  const route = useRoute();
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem("user");
@@ -35,21 +37,37 @@ export default function Etms({ navigation }) {
       // Error retrieving data
     }
   };
+  
+  
 
   useFocusEffect(
     React.useCallback(() => {
       getData();
+      if(route.name==='ApplyBusPass'){
+        setShow(true)
+      }
       return () => {
         // Do something that should run on blur
+        
+        
       };
     }, [])
   );
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Modal transparent={true} visible={false} animationType="fade">
+        <Modal transparent={true} visible={show} animationType="fade">
           <View style={styles.center}>
-            <View style={styles.modalcontainer}>
+            <View style={styles.passalreadycon}>
+              <View style={styles.passalreadyinnercon}>
+                <Image style={styles.passalreadyimg} source={require("../assets/building.png")}/>
+              </View>
+              <Text style={styles.passalreadytxt} >Bus pass already appplied.</Text>
+              <TouchableOpacity onPress={()=>{setShow(false);navigation.navigate("Home")}} ><Text style={styles.oktxt} >OK</Text></TouchableOpacity>
+            </View>
+            {/* <View style={styles.modalcontainer}>
+
+              
               <View style={styles.modalcontainer2}>
                 <Text style={styles.modaltxt}>New Feature!</Text>
               </View>
@@ -75,7 +93,7 @@ export default function Etms({ navigation }) {
                   <Text style={styles.modalbtntxt}>OK</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </View> */}
           </View>
         </Modal>
         <Navbar navigation={navigation} />
@@ -183,6 +201,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 0,
   },
+  passalreadyinnercon:{
+    backgroundColor:'#7CBB11',
+    width:'100%',
+    justifyContent:'center',
+    alignItems:"center",
+    borderTopLeftRadius:3,
+    borderTopRightRadius:3,
+  },
+  passalreadyimg:{
+    aspectRatio:4,
+    marginTop:5,
+    marginBottom:5,
+    width:20,
+    height:30,
+    
+  },
+  passalreadytxt:{
+    marginTop:50,
+    marginBottom:10,
+    color:'gray'
+  },
+  oktxt:{
+    color:'#7CBB11',
+    marginBottom:15,
+    fontSize:17
+  },
   modalbtn: {
     backgroundColor: "#0096FF",
     paddingVertical: 5,
@@ -214,7 +258,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
   },
   linearGradient: {
     alignItems: "center",
@@ -233,6 +277,20 @@ const styles = StyleSheet.create({
     height: 500,
     width: "93%",
     backgroundColor: "white",
+  },
+  passalreadycon:{
+    
+    borderRadius: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+    height: 'auto',
+    width: "80%",
+    backgroundColor: "white",
+    justifyContent:'center',
+    alignItems:'center'
   },
   modalcontainer2: {
     backgroundColor: "green",
@@ -304,8 +362,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   mainbg: {
-    borderRadius: 10,
+    borderRadius: 8,
     margin: 20,
+    marginHorizontal: 18,
     backgroundColor: "#0447c2",
     justifyContent: "center",
     alignItems: "center",
@@ -315,8 +374,8 @@ const styles = StyleSheet.create({
     backgroundGradientBottom: "#666666",
   },
   mainbg2: {
-    borderRadius: 10,
-    marginHorizontal: 25,
+    borderRadius: 9,
+    marginHorizontal: 22,
     borderColor: "black",
 
     height: 'auto',
