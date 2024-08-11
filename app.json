@@ -1,36 +1,10 @@
 {
   "expo": {
-    "name": "eTMS",
-    "slug": "snack-6a7da2e3-f799-4973-95a9-1d7cfeeaa66a",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/etms.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/fulletms.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/etms.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.telmoreashwin.snack6a7da2e3f799497395a91d7cfeeaa66a"
-    },
-    "web": {
-      "favicon": "./assets/etms.png"
-    },
     "extra": {
       "eas": {
-        "projectId": "9a337e11-f826-4777-8cbe-207c0f29e485"
+        "projectId": "8d0487d5-6fe8-4e22-ad2e-0a23ee8af3a3"
       }
-    }
+    },
+    "owner": "amanrathod"
   }
 }
